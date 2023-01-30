@@ -1,0 +1,42 @@
+# Ping the system
+curl -i -H "Content-Type: application/json" -X  GET localhost:8080/ping
+
+# Get the JsonArray of all Consumables
+curl -i -H "Content-Type: application/json" -X GET localhost:8080/listAll
+
+# Add a Consumable to the system
+// To add a Consumable, where the variable or object type is shown, next to the attribute name
+// put a value with the same type as the attribute name there.
+
+NOTE: this format will not work have it in one line and no extra spaces look at example below
+curl -i -H "Content-Type: application/json" -X POST -d "{
+    \"id\" : long,
+    \"type\" : \"String\",
+    \"measure\" : double,
+    \"name\" : \"String\",
+    \"notes\" : \"String\",
+    \"price\" : double,
+    \"expiryDate\" : \"LocalDate\"
+}" localhost:8080/addItem
+
+example:
+curl -i -H "Content-Type: application/json" -X POST -d "{\"id\":1, \"type\":\"DRINK\", \"measure\":2.0, \"name\":\"Apple Juice\", \"notes\":\"90% Grape Juice\", \"price\":2.0, \"expiryDate\":\"2021-11-07\"}" localhost:8080/addItem
+
+# Remove an item from the system
+// To remove the item put the id attribute(long value) replacing the id
+curl -i -H "Content-Type: application/json" -X POST localhost:8080/removeItem/id
+
+example:
+curl -i -H "Content-Type: application/json" -X POST localhost:8080/removeItem/1
+
+# Get the JsonArray of all expired Consumables
+curl -i -H "Content-Type: application/json" -X GET localhost:8080/listExpired
+
+# Get the JsonArray of all non-expired Consumables
+curl -i -H "Content-Type: application/json" -X GET localhost:8080/listNonExpired
+
+# Get the JsonArray of all Consumables Expiring in a week including today
+curl -i -H "Content-Type: application/json" -X GET localhost:8080/listExpiringIn7Days
+
+# Get the system to save the current database of Consumables into a JSON file(./ConsumablesDatabase.json)
+curl -i -H "Content-Type: application/json" -X GET localhost:8080/exit
